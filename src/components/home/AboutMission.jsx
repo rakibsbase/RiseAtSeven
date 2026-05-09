@@ -14,7 +14,8 @@ const AboutMission = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Heading animation
+      // Reveal animation for the main heading words.
+      // Uses rotateX and y-offset to create a 'flipping' entrance effect.
       gsap.from(".js-heading .js-word", {
         opacity: 0,
         y: 30,
@@ -28,7 +29,7 @@ const AboutMission = () => {
         },
       });
 
-      // Descriptor animation
+      // Subtle fade-up for the supporting descriptor paragraph.
       gsap.from(".js-descriptor", {
         opacity: 0,
         y: 20,
@@ -51,13 +52,13 @@ const AboutMission = () => {
     >
       <div className="w-full px-4 md:px-7">
         <div className="w-full flex flex-col-reverse md:flex-row justify-between items-start gap-x-3 md:gap-x-5 gap-y-4 md:gap-y-5">
-          {/* MOBILE BUTTONS - Hidden on MD+ */}
+          {/* Mobile CTA buttons rendered at the bottom of the stack on small screens */}
           <div className="flex flex-wrap gap-4 w-full md:hidden">
             <ActionButton href="/about" label="Our Story" primary />
             <ActionButton href="/services" label="Our Services" />
           </div>
 
-          {/* LEFT SIDE: Descriptor */}
+          {/* Left Panel: Brand Descriptor */}
           <div className="w-full mb-1 md:mt-2 md:mb-0 max-w-sm xl:max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl">
             <div className="js-descriptor inline-flex flex-wrap text-balance relative text-left justify-start text-gray-900 text-lg/tight lg:text-lg/tight xl:text-2xl/none 4xl:text-3xl/none font-medium tracking-tight">
               A global team of search-first content marketers engineering
@@ -66,7 +67,7 @@ const AboutMission = () => {
             </div>
           </div>
 
-          {/* RIGHT SIDE: Heading & Desktop Buttons */}
+          {/* Right Panel: Primary Heading & Visual Asset */}
           <div className="w-full grid max-w-[24rem] md:max-w-160 xl:max-w-xl 2xl:max-w-2xl 3xl:max-w-[52rem] 4xl:max-w-5xl gap-y-4 md:gap-y-10">
             <h2 className="js-heading inline-flex flex-wrap text-balance relative flex-col text-left justify-start text-gray-900 text-5xl/none lg:text-7xl/none xl:text-[7.5rem]/0.9 3xl:text-[8.5rem]/0.9 4xl:text-[10rem]/0.9 font-bold tracking-tighter leading-none">
               <div className="flex flex-wrap relative text-left justify-start gap-x-3 md:gap-x-4">
@@ -74,6 +75,8 @@ const AboutMission = () => {
                 <span className="js-word">Demand</span>
                 <span className="js-word">&</span>
                 <span className="js-word">Discovery</span>
+
+                {/* Inline image asset styled with a rounded container to match brand aesthetic */}
                 <div className="js-image-wrapper inline-shrink-0 flex bg-black/10 relative overflow-hidden rounded-[15%] w-20 md:w-25 xl:w-30 aspect-[1.1/1]">
                   <Image
                     src="/asset/AboutMission.webp"
@@ -86,7 +89,7 @@ const AboutMission = () => {
               </div>
             </h2>
 
-            {/* DESKTOP BUTTONS - Visible on MD+ */}
+            {/* Desktop CTA buttons rendered alongside the heading */}
             <div className="hidden md:flex flex-wrap gap-4">
               <ActionButton href="/about" label="Our Story" primary />
               <ActionButton href="/services" label="Our Services" />
@@ -98,9 +101,16 @@ const AboutMission = () => {
   );
 };
 
+/**
+ * ActionButton Component
+ *
+ * A reusable link component featuring a dual-layer sliding text animation.
+ * On hover, the primary text slides up while a secondary layer slides in from the bottom.
+ */
 const ActionButton = ({ href, label, primary = false }) => {
   const baseClasses =
     "group relative inline-flex shrink-0 justify-center gap-x-2 items-center leading-tight tracking-tight capitalize font-medium overflow-hidden border border-transparent cursor-pointer focus:outline-none w-full md:w-auto text-base px-6 py-3 rounded-3xl transition-all duration-300 pointer-fine:hover:rounded-xl flex-row-reverse";
+
   const variantClasses = primary
     ? "bg-white text-black ring-1 ring-gray-900/5 shadow-sm"
     : "bg-transparent text-black";
@@ -108,7 +118,7 @@ const ActionButton = ({ href, label, primary = false }) => {
   return (
     <Link href={href} className={`${baseClasses} ${variantClasses}`}>
       <div className="relative overflow-hidden h-6">
-        {/* First Text Layer */}
+        {/* Layer 1: Static State */}
         <div className="flex items-center gap-x-2 transition-transform duration-500 group-hover:-translate-y-6">
           <span>{label}</span>
           <svg
@@ -127,7 +137,8 @@ const ActionButton = ({ href, label, primary = false }) => {
             <polyline points="7 7 17 7 17 17"></polyline>
           </svg>
         </div>
-        {/* Second Text Layer (Sliding in) */}
+
+        {/* Layer 2: Hover State (Sliding in from bottom) */}
         <div className="absolute top-0 left-0 flex items-center gap-x-2 translate-y-6 transition-transform duration-500 group-hover:translate-y-0 text-current">
           <span>{label}</span>
           <svg
