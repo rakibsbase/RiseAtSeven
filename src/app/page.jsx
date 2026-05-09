@@ -3,6 +3,7 @@ import ClientLogos from "@/components/home/ClientLogos";
 import FeaturedWork from "@/components/home/FeaturedWork";
 import HeroSection from "@/components/home/HeroSection";
 import InfiniteMarquee from "@/components/home/InfiniteMarquee";
+import LegacyAccordion from "@/components/home/LegacyAccordion";
 import Service from "@/components/home/Service";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
 
       {/* 3. Social Proof & Authority */}
       <InfiniteMarquee />
+      <LegacyAccordion />
     </>
   );
 }
