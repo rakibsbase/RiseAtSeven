@@ -1,5 +1,10 @@
-import Image from "next/image";
+import HeroSection from "@/components/home/HeroSection";
 
 export default function Home() {
-  return <h2>Hello Dev</h2>;
+  return (
+    <>
+      {/* 1. Impact & Credibility Layer */}
+      <HeroSection />
+    </>
+  );
 }

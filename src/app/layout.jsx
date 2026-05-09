@@ -1,16 +1,9 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
+import AnnouncementBar from "@/components/layout/AnnouncementBar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+// Global SEO & Metadata Configuration
+// Optimized for search-first content marketing visibility.
 export const metadata = {
   title: "Rise at Seven | Award Winning Search-First Content Marketing Agency",
   description:
@@ -19,11 +12,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className="h-full antialiased">
+      <body className="min-h-full bg-[#f5f4f0] font-sans selection:bg-black selection:text-white">
+        {/* Global UI Components */}
+        <AnnouncementBar />
+        <Navbar />
+        <main className="grow focus:outline-none" id="main-content">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
