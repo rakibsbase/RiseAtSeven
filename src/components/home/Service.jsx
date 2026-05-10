@@ -111,19 +111,22 @@ const Service = () => {
               className="js-heading-animate flex flex-wrap items-center text-left text-gray-900 text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-none"
               aria-label="Our Services"
             >
-              <div className="flex flex-wrap items-center">
-                <span className="js-word inline-block mr-2 pointer-fine:mr-0">
-                  Our
-                </span>
-                <div className="js-header-image inline-block shrink-0 bg-black/5 mr-2 pointer-fine:mr-0 overflow-hidden rounded-[15%] w-13.5 md:w-22.5 h-auto aspect-square relative">
+              <div className="flex flex-wrap items-center gap-x-1.5 sm:gap-x-2 md:gap-x-3 lg:gap-x-4">
+                <span className="js-word inline-block">Our</span>
+
+                <div className="js-header-image inline-block shrink-0 bg-black/5 overflow-hidden rounded-[15%] w-13.5 sm:w-15 md:w-18 lg:w-22.5 aspect-square relative translate-y-0.5 sm:translate-y-0.75 md:translate-y-1">
                   <Image
                     src="/service/0B5A7487.webp"
                     alt="Services Thumbnail"
                     fill
-                    sizes="(max-width: 768px) 54px, 90px"
+                    sizes="(max-width: 640px) 54px,
+             (max-width: 768px) 60px,
+             (max-width: 1024px) 72px,
+             90px"
                     className="object-cover"
                   />
                 </div>
+
                 <span className="js-word inline-block">Services</span>
               </div>
             </h2>

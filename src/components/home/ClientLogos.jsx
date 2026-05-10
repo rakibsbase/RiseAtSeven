@@ -89,8 +89,7 @@ const ClientLogos = () => {
           {/* Introductory label aligned with the grid system */}
           <div className="col-span-20 flex items-center md:col-span-4 lg:col-span-3 xl:col-span-2">
             <h2 className="inline-flex flex-wrap text-balance relative text-left justify-start text-gray-900 text-sm md:text-base font-medium tracking-tight leading-tight select-none">
-              The agency
-              <br className="hidden md:block lg:hidden" />
+              The agency <br className="hidden md:block lg:hidden" />
               behind ...
             </h2>
           </div>
@@ -133,6 +132,11 @@ const ClientLogos = () => {
                Custom CSS 'Stepped Blurs' to create a soft vignette effect at the edges.
                This is often preferred over simple gradients for a more premium 'layered' look.
             */}
+            <div className="section-blur section-blur--left">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div key={i} style={{ "--index": i }} />
+              ))}
+            </div>
             <div className="section-blur section-blur--right">
               {[0, 1, 2, 3, 4].map((i) => (
                 <div key={i} style={{ "--index": i }} />

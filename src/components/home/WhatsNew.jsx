@@ -141,38 +141,55 @@ const WhatsNew = () => {
           <div className="col-span-12 md:col-span-9 flex items-end">
             <h2
               ref={headingRef}
-              className="flex flex-wrap items-center text-left text-gray-900 text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl leading-none font-medium tracking-tight"
+              className="flex flex-wrap items-center text-left text-gray-900 text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl leading-[0.95] font-medium tracking-tight"
               aria-label="What's New"
             >
-              <div className="flex flex-wrap items-center gap-x-2 md:gap-x-4">
-                <div className="inline-flex gap-x-[0.05em] js-word">
+              <div className="flex flex-wrap items-center gap-x-1.5 sm:gap-x-2 md:gap-x-3 lg:gap-x-4">
+                <div className="inline-flex gap-x-[0.02em]">
                   {renderText("What's")}
                 </div>
 
-                <div className="inline-flex align-middle shrink-0 rounded-[15%] w-18.75 md:w-22.5 aspect-4/3 relative overflow-hidden js-image-wrapper">
+                <div className="inline-flex align-middle shrink-0 rounded-[15%] w-16 sm:w-18 md:w-20 lg:w-22.5 aspect-4/3 relative overflow-hidden js-image-wrapper translate-y-0.5 sm:translate-y-0.75 md:translate-y-1">
                   <Image
                     src="/whatsNew/FOS25-3380.webp"
                     alt="Decoration"
                     fill
-                    sizes="(max-width: 768px) 75px, 90px"
+                    sizes="(max-width: 640px) 64px,
+             (max-width: 768px) 72px,
+             (max-width: 1024px) 80px,
+             90px"
                     className="object-cover"
                   />
                 </div>
 
-                <div className="inline-flex gap-x-[0.05em] js-word">
+                <div className="inline-flex gap-x-[0.02em]">
                   {renderText("New")}
                 </div>
               </div>
             </h2>
           </div>
 
-          <div className="hidden md:flex col-span-12 md:col-span-3 md:items-center md:justify-end">
+          {/* Desktop Button */}
+          <div className="hidden lg:flex col-span-12 lg:col-span-3 lg:items-center lg:justify-end">
             <Link
               href="https://riseatseven.com/blog/"
-              className="group relative inline-flex items-center gap-x-2 bg-white text-gray-900 border border-gray-200 px-6 py-3 rounded-full font-medium text-base overflow-hidden transition-all duration-300 hover:rounded-xl hover:bg-gray-50"
+              className="group inline-flex shrink-0 justify-center gap-x-2 items-center relative leading-tight tracking-tightish capitalize font-medium overflow-hidden border border-transparent cursor-pointer focus:outline-none lg:w-auto text-base px-6 py-3 rounded-3xl transition-all duration-300 pointer-fine:hover:rounded-xl bg-white text-gray-900 ring-gray-900/5 flex-row-reverse"
             >
-              <span className="relative z-10">Explore More Thoughts</span>
-              <FiArrowUpRight className="relative z-10 transition-transform duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <div className="relative overflow-hidden h-6">
+                <div className="transition duration-300 pointer-fine:group-hover:-translate-y-6">
+                  <div className="flex items-center gap-x-2">
+                    <span>Explore More Thoughts</span>
+                    <FiArrowUpRight className="text-xs mt-1" />
+                  </div>
+                </div>
+
+                <div className="transition absolute top-0 left-0 translate-y-6 pointer-fine:group-hover:translate-y-0 w-full">
+                  <div className="flex items-center gap-x-2">
+                    <span>Explore More Thoughts</span>
+                    <FiArrowUpRight className="text-xs mt-1" />
+                  </div>
+                </div>
+              </div>
             </Link>
           </div>
         </div>
@@ -217,7 +234,7 @@ const WhatsNew = () => {
                       alt={post.title}
                       fill
                       sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
-                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                      className="object-cover transition-all duration-700 group-hover:scale-105 group-hover:blur-sm"
                     />
                     <div className="absolute top-3 left-3 z-20">
                       <div className="bg-white/20 backdrop-blur-md text-white text-sm px-4 py-1.5 rounded-full font-medium">
@@ -263,6 +280,30 @@ const WhatsNew = () => {
             <div className="swiper-pagination static! h-full! bg-transparent! [&>.swiper-pagination-progressbar-fill]:bg-black!" />
           </div>
         </div>
+      </div>
+
+      {/* Mobile + Tablet Button */}
+      <div className="mt-10 flex justify-center lg:hidden">
+        <Link
+          href="https://riseatseven.com/blog/"
+          className="w-full sm:w-auto group inline-flex shrink-0 justify-center gap-x-2 items-center relative leading-tight tracking-tightish capitalize font-medium overflow-hidden border border-transparent cursor-pointer focus:outline-none text-base px-6 py-3 rounded-3xl transition-all duration-300 pointer-fine:hover:rounded-xl bg-white text-gray-900 ring-gray-900/5 flex-row-reverse"
+        >
+          <div className="relative overflow-hidden h-6">
+            <div className="transition duration-300 pointer-fine:group-hover:-translate-y-6">
+              <div className="flex items-center gap-x-2">
+                <span>Explore More Thoughts</span>
+                <FiArrowUpRight className="text-xs mt-1" />
+              </div>
+            </div>
+
+            <div className="transition absolute top-0 left-0 translate-y-6 pointer-fine:group-hover:translate-y-0 w-full">
+              <div className="flex items-center gap-x-2">
+                <span>Explore More Thoughts</span>
+                <FiArrowUpRight className="text-xs mt-1" />
+              </div>
+            </div>
+          </div>
+        </Link>
       </div>
 
       {/**

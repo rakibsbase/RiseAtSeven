@@ -21,14 +21,18 @@ const marqueeItems = [
 
 const InfiniteMarquee = () => {
   const marqueeRef = useRef(null);
+  const wrapperRef = useRef(null);
   const cursorRef = useRef(null);
   const sectionRef = useRef(null);
   const marqueeTweenRef = useRef(null);
   const settleTweenRef = useRef(null);
+  const quickNudgeRef = useRef(null);
 
   /**
    * GSAP Marquee Implementation
-   * Handles the continuous movement and the scroll-velocity interaction.
+   * Handles the continuous movement and the scroll-nudge interaction.
+   * The loop tween and the nudge tween target separate elements so
+   * they never conflict with each other.
    */
   useEffect(() => {
     const marquee = marqueeRef.current;
@@ -40,7 +44,7 @@ const InfiniteMarquee = () => {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Primary infinite horizontal movement.
+      // Primary infinite horizontal movement — targets marqueeRef directly.
       marqueeTweenRef.current = gsap.to(marquee, {
         x: -totalSetWidth,
         duration: 70,
@@ -52,37 +56,32 @@ const InfiniteMarquee = () => {
         },
       });
 
-      // Dynamic Speed Control based on Scroll Velocity.
+      // quickTo setter for the scroll nudge — targets wrapperRef (separate layer).
+      quickNudgeRef.current = gsap.quickTo(wrapperRef.current, "x", {
+        duration: 0.5,
+        ease: "power3.out",
+      });
+
+      // Scroll nudge: slight forward/backward shift based on scroll velocity.
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top bottom",
         end: "bottom top",
         onUpdate: (self) => {
-          const marqueeTween = marqueeTweenRef.current;
-          if (!marqueeTween) return;
-
-          // Normalized velocity (-1 to 1) for a consistent responsive feel.
           const velocity = self.getVelocity();
-          const normalized = gsap.utils.clamp(-1, 1, velocity / 300);
 
-          // Boost or reduce timeScale based on scroll direction/speed.
-          const targetScale = 1 + normalized * 0.6;
+          // Map velocity → small pixel nudge.
+          // ±40px max keeps it subtle. Divide by 25 to scale the raw velocity down.
+          const nudge = gsap.utils.clamp(-40, 40, velocity / 25);
+          quickNudgeRef.current(nudge);
 
-          gsap.to(marqueeTween, {
-            timeScale: targetScale,
-            duration: 0.18,
-            ease: "power2.out",
-            overwrite: true,
-          });
-
-          // Smoothly return to the base speed (1.0) after scrolling stops.
+          // Smoothly settle back to 0 when scrolling stops.
           settleTweenRef.current?.kill();
-          settleTweenRef.current = gsap.to(marqueeTween, {
-            timeScale: 1,
-            duration: 0.75,
-            delay: 0.05,
+          settleTweenRef.current = gsap.to(wrapperRef.current, {
+            x: 0,
+            duration: 1,
+            delay: 0.1,
             ease: "power3.out",
-            overwrite: true,
           });
         },
       });
@@ -91,6 +90,7 @@ const InfiniteMarquee = () => {
     return () => {
       settleTweenRef.current?.kill();
       marqueeTweenRef.current = null;
+      quickNudgeRef.current = null;
       ctx.revert();
     };
   }, []);
@@ -138,41 +138,48 @@ const InfiniteMarquee = () => {
       >
         <Link
           href="https://riseatseven.com/contact/"
-          className="block w-full group relative cursor-none"
+          className="block w-full group relative cursor-none overflow-hidden"
         >
           {/**
-           * Marquee Container
-           * Items are quadrupled to ensure the continuous loop never reveals a blank edge
-           * on ultra-wide screens or during high-velocity movement.
+           * Nudge Wrapper
+           * Receives the subtle scroll-driven x offset.
+           * Kept separate from marqueeRef so the two GSAP tweens never conflict.
            */}
-          <div
-            ref={marqueeRef}
-            className="flex whitespace-nowrap py-6 md:py-10 lg:py-16 items-center"
-          >
-            {[
-              ...marqueeItems,
-              ...marqueeItems,
-              ...marqueeItems,
-              ...marqueeItems,
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-x-6 md:gap-x-8 lg:gap-x-12 px-4 md:px-6 lg:px-10 shrink-0"
-              >
-                <h2 className="text-6xl md:text-8xl lg:text-[10rem] xl:text-[12rem] font-medium tracking-tighter text-gray-900 leading-none">
-                  {item.text}
-                </h2>
-                <div className="shrink-0 rounded-2xl md:rounded-3xl overflow-hidden w-[25vw] md:w-[15vw] lg:w-[12vw] aspect-square relative shadow-lg">
-                  <Image
-                    src={item.image}
-                    alt={item.text}
-                    fill
-                    sizes="(max-width: 768px) 25vw, (max-width: 1024px) 15vw, 12vw"
-                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                  />
+          <div ref={wrapperRef}>
+            {/**
+             * Marquee Container
+             * Items are quadrupled to ensure the continuous loop never reveals a blank edge
+             * on ultra-wide screens or during high-velocity movement.
+             */}
+            <div
+              ref={marqueeRef}
+              className="flex whitespace-nowrap py-6 md:py-10 lg:py-16 items-center"
+            >
+              {[
+                ...marqueeItems,
+                ...marqueeItems,
+                ...marqueeItems,
+                ...marqueeItems,
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-x-6 md:gap-x-8 lg:gap-x-12 px-4 md:px-6 lg:px-10 shrink-0"
+                >
+                  <h2 className="text-6xl md:text-8xl lg:text-[10rem] xl:text-[12rem] font-medium tracking-tighter text-gray-900 leading-none">
+                    {item.text}
+                  </h2>
+                  <div className="shrink-0 rounded-2xl md:rounded-3xl overflow-hidden w-[25vw] md:w-[15vw] lg:w-[12vw] aspect-square relative shadow-lg">
+                    <Image
+                      src={item.image}
+                      alt={item.text}
+                      fill
+                      sizes="(max-width: 768px) 25vw, (max-width: 1024px) 15vw, 12vw"
+                      className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </Link>
       </section>

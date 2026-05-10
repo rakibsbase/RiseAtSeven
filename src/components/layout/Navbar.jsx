@@ -19,25 +19,25 @@ const navItems = [
             label: "Search & Growth Strategy",
             href: "/services/strategy-growth",
             id: 4790,
-            image: "/header/Screenshot-2025-06-23-at-23.14.49.webp",
+            image: "/navbar/Screenshot-2025-06-23-at-23.14.49.webp",
           },
           {
             label: "Onsite SEO",
             href: "/services/onsite-seo",
             id: 11981,
-            image: "/header/WhatsApp-Image-2025-06-03-at-08.34.50.webp",
+            image: "/navbar/WhatsApp-Image-2025-06-03-at-08.34.50.webp",
           },
           {
             label: "Content Experience",
             href: "/services/content-experience",
             id: 4789,
-            image: "/header/Screenshot-2025-06-23-at-23.16.14.webp",
+            image: "/navbar/Screenshot-2025-06-23-at-23.16.14.webp",
           },
           {
             label: "B2B Marketing",
             href: "/services/b2b-marketing",
             id: 22669,
-            image: "/header/0B5A6875.webp",
+            image: "/navbar/0B5A6875.webp",
           },
         ],
       },
@@ -48,26 +48,26 @@ const navItems = [
             label: "Digital PR",
             href: "/services/digital-pr",
             id: 12019,
-            image: "/header/Screenshot-2025-06-23-at-22.39.35.webp",
+            image: "/navbar/Screenshot-2025-06-23-at-22.39.35.webp",
           },
           {
             label: "Social Media & Campaigns",
             href: "/services/social",
             id: 12020,
             image:
-              "/header/temp_image_43CEDE6C-4430-479F-9DBF-B348FA9AC991.webp",
+              "/navbar/temp_image_43CEDE6C-4430-479F-9DBF-B348FA9AC991.webp",
           },
           {
             label: "Data & Insights",
             href: "/services/data-insights",
             id: 12021,
-            image: "/header/data.webp",
+            image: "/navbar/data.webp",
           },
           {
             label: "Social SEO/Search",
             href: "/services/social-seo-tiktok-youtube",
             id: 16559,
-            image: "/header/Screenshot-2025-09-24-at-11.47.25.webp",
+            image: "/navbar/Screenshot-2025-09-24-at-11.47.25.webp",
           },
         ],
       },
@@ -85,7 +85,7 @@ const navItems = [
             label: "B2B Marketing",
             href: "/services/b2b-marketing",
             id: 23931,
-            image: "/header/0B5A6875.webp",
+            image: "/navbar/0B5A6875.webp",
           },
         ],
       },
@@ -103,25 +103,25 @@ const navItems = [
             label: "US Digital PR",
             href: "/international/us-digital-pr",
             id: 4762,
-            image: "/header/d4df0d30-d590-4e94-9056-9491f4beacba.webp",
+            image: "/navbar/d4df0d30-d590-4e94-9056-9491f4beacba.webp",
           },
           {
             label: "Spain Digital PR",
             href: "/spain-digital-pr",
             id: 23207,
-            image: "/header/Logos_2026-04-23-101020_frxy.webp",
+            image: "/navbar/Logos_2026-04-23-101020_frxy.webp",
           },
           {
             label: "Germany Digital PR",
             href: "/germany-digital-pr",
             id: 23208,
-            image: "/header/27.webp",
+            image: "/navbar/27.webp",
           },
           {
             label: "Netherlands Digital PR",
             href: "/netherlands-digital-pr",
             id: 23603,
-            image: "/header/Logos_2026-04-23-095313_xfhk.webp",
+            image: "/navbar/Logos_2026-04-23-095313_xfhk.webp",
           },
         ],
       },
@@ -139,25 +139,25 @@ const navItems = [
             label: "About Us",
             href: "/about",
             id: 16915,
-            image: "/header/0B5A7487.webp",
+            image: "/navbar/0B5A7487.webp",
           },
           {
             label: "Meet The Risers",
             href: "/meet-the-team",
             id: 16916,
-            image: "/header/Screenshot-2025-06-23-at-23.14.49.webp",
+            image: "/navbar/Screenshot-2025-06-23-at-23.14.49.webp",
           },
           {
             label: "Culture",
             href: "/culture",
             id: 16917,
-            image: "/header/Screenshot-2025-06-23-at-23.14.49.webp",
+            image: "/navbar/Screenshot-2025-06-23-at-23.14.49.webp",
           },
           {
             label: "Testimonials",
             href: "/testimonials",
             id: 16918,
-            image: "/header/d4df0d30-d590-4e94-9056-9491f4beacba.webp",
+            image: "/navbar/d4df0d30-d590-4e94-9056-9491f4beacba.webp",
           },
         ],
       },
@@ -182,11 +182,23 @@ const Navbar = () => {
   const previousScrollPosition = useRef(0);
   const previousMegaMenuWidth = useRef(null);
   const previousMegaMenuHeight = useRef(null);
-  const hoverBackgroundRef = useRef(null); // Pill background for nav items
+  const hoverBackgroundRef = useRef(null);
   const navContainerRef = useRef(null);
   const megaMenuRefs = useRef({});
+  const closeTimeoutRef = useRef(null);
+  const lastNavItemRectRef = useRef(null);
 
-  // Layout configuration for specific mega menu IDs to handle varying content densities.
+  const scheduleClose = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setMegaMenu(false);
+      gsap.to(hoverBackgroundRef.current, { opacity: 0, duration: 0.3 });
+    }, 150);
+  };
+
+  const cancelClose = () => {
+    clearTimeout(closeTimeoutRef.current);
+  };
+
   const megaMenuLayoutById = {
     102: {
       panelWidthClass: "lg:w-[948px]",
@@ -194,6 +206,7 @@ const Navbar = () => {
       imageWrapClass: "w-80",
       showImageCta: true,
       panelPaddingClass: "p-3",
+      contentPaddingClass: "px-12 py-8",
     },
     23929: {
       panelWidthClass: "lg:w-[571px]",
@@ -201,6 +214,7 @@ const Navbar = () => {
       imageWrapClass: "w-72",
       showImageCta: false,
       panelPaddingClass: "p-3",
+      contentPaddingClass: "px-14 py-10",
     },
     103: {
       panelWidthClass: "lg:w-[664px]",
@@ -208,6 +222,7 @@ const Navbar = () => {
       imageWrapClass: "w-72",
       showImageCta: false,
       panelPaddingClass: "p-3",
+      contentPaddingClass: "px-14 py-10",
     },
     16913: {
       panelWidthClass: "lg:w-[586px]",
@@ -215,6 +230,7 @@ const Navbar = () => {
       imageWrapClass: "w-72",
       showImageCta: false,
       panelPaddingClass: "p-3",
+      contentPaddingClass: "px-14 py-10",
     },
   };
 
@@ -398,8 +414,7 @@ const Navbar = () => {
             ref={navContainerRef}
             className="hidden lg:flex items-center relative gap-x-1 py-1 px-1 rounded-full group/nav"
             onMouseLeave={() => {
-              setMegaMenu(false);
-              updateHoverBackground(null, false, true);
+              scheduleClose();
             }}
           >
             {/* Sliding Pill Background: Visual anchor for active hover state */}
@@ -418,10 +433,12 @@ const Navbar = () => {
                       : "text-gray-900"
                   } hover:text-gray-900`}
                   onMouseEnter={(e) => {
+                    cancelClose();
+                    lastNavItemRectRef.current =
+                      e.currentTarget.getBoundingClientRect();
                     updateHoverBackground(e, true);
                     if (item.hasDropdown) {
                       setMegaMenu(item.id);
-                      // Pre-select first link to avoid initial empty state in preview panel.
                       const firstLink = item.columns?.flatMap(
                         (c) => c.links,
                       )?.[0];
@@ -493,14 +510,33 @@ const Navbar = () => {
                   } lg:max-w-none overflow-hidden ${
                     megaMenuLayoutById[item.id]?.panelPaddingClass || "p-3"
                   } border border-gray-100 z-50 pointer-events-none opacity-0`}
-                  onMouseEnter={() => setMegaMenu(item.id)}
+                  onMouseEnter={() => {
+                    cancelClose();
+                    setMegaMenu(item.id);
+                    if (lastNavItemRectRef.current && navContainerRef.current) {
+                      const rect = lastNavItemRectRef.current;
+                      const menuRect =
+                        navContainerRef.current.getBoundingClientRect();
+                      gsap.to(hoverBackgroundRef.current, {
+                        width: rect.width,
+                        left: rect.left - menuRect.left,
+                        opacity: 1,
+                        duration: 0.3,
+                        ease: "power2.out",
+                      });
+                    }
+                  }}
                   onMouseLeave={() => {
-                    setMegaMenu(false);
-                    updateHoverBackground(null, false, true);
+                    scheduleClose();
                   }}
                 >
                   {/* Links Content Column */}
-                  <div className="flex-1 flex items-center justify-center px-12 py-8 gap-x-12">
+                  <div
+                    className={`flex-1 min-w-0 flex items-center justify-center gap-x-12 ${
+                      megaMenuLayoutById[item.id]?.contentPaddingClass ||
+                      "px-12 py-8"
+                    }`}
+                  >
                     {item.columns.map((col, idx) => (
                       <div key={idx} className="flex-1 -mt-1">
                         <h4 className="text-gray-400 text-base font-medium tracking-tight mb-4 h-8">
