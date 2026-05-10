@@ -4,7 +4,9 @@ import FeaturedWork from "@/components/home/FeaturedWork";
 import HeroSection from "@/components/home/HeroSection";
 import InfiniteMarquee from "@/components/home/InfiniteMarquee";
 import LegacyAccordion from "@/components/home/LegacyAccordion";
+import ReadyToRise from "@/components/home/ReadyToRise";
 import Service from "@/components/home/Service";
+import WhatsNew from "@/components/home/WhatsNew";
 
 export default function Home() {
   return (
@@ -21,6 +23,10 @@ export default function Home() {
       {/* 3. Social Proof & Authority */}
       <InfiniteMarquee />
       <LegacyAccordion />
+
+      {/* 4. Insights & Conversion */}
+      <WhatsNew />
+      <ReadyToRise />
     </>
   );
 }

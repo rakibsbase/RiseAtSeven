@@ -1,6 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
+import Footer from "@/components/layout/Footer";
 
 // Global SEO & Metadata Configuration
 // Optimized for search-first content marketing visibility.
@@ -20,6 +21,8 @@ export default function RootLayout({ children }) {
         <main className="grow focus:outline-none" id="main-content">
           {children}
         </main>
+
+        <Footer />
       </body>
     </html>
   );
