@@ -151,10 +151,10 @@ Typography in `HeroSection` and `AboutMission` utilizes an `overflow-hidden` wra
 
 ## 📸 Screenshots
 
-|                            Desktop View                            |                            Mobile View                            |
-| :----------------------------------------------------------------: | :---------------------------------------------------------------: |
-| ![Desktop Screenshot Placeholder](/public/asset/AboutMission.webp) | ![Mobile Screenshot Placeholder](/public/asset/AboutMission.webp) |
-|                _High-impact Hero & Sticky Gallery_                 |               _Touch-optimized Swiper & Accordions_               |
+|                                Desktop View                                |                                Mobile View                                |
+| :------------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
+| ![Desktop Screenshot Placeholder](https://i.ibb.co.com/Vcn1hLp7/image.png) | ![Mobile Screenshot Placeholder](https://i.ibb.co.com/F49fNwhC/image.png) |
+|                    _High-impact Hero & Sticky Gallery_                     |                   _Touch-optimized Swiper & Accordions_                   |
 
 ---
 
@@ -180,7 +180,7 @@ This is a **Frontend Portfolio Project**.
 **Rakib**
 
 - GitHub: [@rakibsbase](https://github.com/rakibsbase)
-- Portfolio: [rakib.dev](https://rakib-portfolio-beryl.vercel.app) (Replace with your actual link)
+- Portfolio: [rakib.dev](https://rakib-portfolio-beryl.vercel.app)
 - LinkedIn: [Connect with me](https://www.linkedin.com/in/rakib-aziz-b33553147)
 
 ---
